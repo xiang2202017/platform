@@ -95,8 +95,8 @@ public class FMenuController extends BaseController {
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-//			Integer menuid = Integer.parseInt(pd.getString("menuId"));
-//			FMenu menu = fmenuService.getMenuById(menuid);
+			Integer menuid = Integer.parseInt(pd.getString("menuId"));
+			FMenu menu = fmenuService.getMenuById(menuid);
 			Integer parentId = menu.getParent_id() == 0 ? menu.getMenu_id() : menu.getParent_id();
 			List<FMenu> pfmenulist = fmenuService.listSubMenuByParentId(parentId);
 			

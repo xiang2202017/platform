@@ -65,7 +65,9 @@
 			set 
 				title = #{title},
 				keywords = #{keywords},
-				imgPath = #{imgPath},
+				<if test="imgPath!='' and imgPath!=null">
+				 imgPath = #{imgPath},
+				</if>
 				type = #{type},
 				editime = #{editime},
 				author = #{author},

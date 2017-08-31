@@ -43,8 +43,9 @@
             
             //$("#waitDiv").show();
             //上传文件到服务器
+             var time = new Date().getTime();
             $.ajaxFileUpload({  
-	        	url: 'uploadMainImg', //后台提交地址  
+	        	url: '<%=basePath%>back/uploadMainImg.do?tm='+time, //后台提交地址 
                 secureuri: false,//异步 "
 	            fileElementId: "uploadimg",//上传控件ID  
 	            dataType: "json",//返回的数据信息格式  
@@ -52,7 +53,8 @@
 	            success: function(data, status) {  
 	            	if (data.msg == 'success') {  
 	                	var attach= data.path;  
-	                    $("[name=preImg]").attr("src", attach);  
+	                    $("#preImg").attr("src", attach); 
+	                    $("#mainImgPath").val(attach); 
 	                   // alert("上传成功");  
 	                } else {  
 	                    alert("服务器故障，稍后再试！");  
@@ -129,10 +131,11 @@
 						<tr>
 							<td align="right" valign="top">主图片</td>
 							<td valign="middle">
-								<img id="preImg" alt="" src="<%=basePath%>static/images/pre.jpg">
+								<img id="preImg" style="width:280px;height:200px"  alt="" src="${pd.imgPath}">
 								<div id="uploadDiv">
 									<input id="uploadimg" name="uploadimg" type="file" value="选择图片" onchange="refreshImg()" accept="image/*">
 <!-- 									<input type="button" value="上传"> -->
+									<input id="mainImgPath" name="mainImgPath" type="hidden">
 									<label>选择图片尺寸为：100*50</label>
 								</div>
 								

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.health.controller.base.BaseController;
@@ -171,7 +172,7 @@ public class NewsController extends BaseController{
 	 */
 	@RequestMapping(value="/back/uploadMainImg", produces="text/html;chartset=utf-8")
 	@ResponseBody
-	public Object uploadNewsMainImg(HttpServletRequest request, @RequestParam(value = "uploadimg") MultipartFile file) throws IOException{  
+	public Object uploadNewsMainImg(HttpServletRequest request, @RequestParam(value = "uploadimg") CommonsMultipartFile  uploadimg) throws IOException{  
 		String realPath = getRequest().getSession().getServletContext().getRealPath("/");
 		String saveDirectoryPath = realPath + Const.FILE_UPLOAD_TEMP;
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -182,19 +183,19 @@ public class NewsController extends BaseController{
 		//如果只是上传一个文件,则只需要MultipartFile类型接收文件即可,而且无需显式指定@RequestParam注解
 		//如果想上传多个文件,那么这里就要用MultipartFile[]类型来接收文件,并且要指定@RequestParam注解
 		//上传多个文件时,前台表单中的所有<input type="file"/>的name都应该是myfiles,否则参数里的myfiles无法获取到所有上传的文件
-			if(file.isEmpty()){
+			if(uploadimg.isEmpty()){
 				return "{'msg':'fail', 'reason':'文件不能为空'}";
 			}else{
-				filename = System.currentTimeMillis()+file.getOriginalFilename();
+				filename = System.currentTimeMillis()+uploadimg.getOriginalFilename();
 				try{
-					FileUtils.copyInputStreamToFile(file.getInputStream(), new File(saveDirectoryPath, filename));
+					FileUtils.copyInputStreamToFile(uploadimg.getInputStream(), new File(saveDirectoryPath, filename));
 				}catch (IOException  e) {
 					e.printStackTrace();
 					return "{'msg':'fail', 'reason':'文件上传失败'}";
 				}
 			}
-		
-		return "{'msg':'success','path':'" + filename + "'}";
+		String path = "/HealthPlatn/uploadFiles/uploadImgs/temp/"+ filename;
+		return "{'msg':'success','path':'" + path + "'}";
     }
 	
 	/**
@@ -209,7 +210,7 @@ public class NewsController extends BaseController{
 		PageData pg = new PageData();
 		try{
 			pg = this.getPageData();
-			
+			logger.debug(pg);
 			//shiro管理的session
 			Subject currentUser = SecurityUtils.getSubject();  
 			Session session = currentUser.getSession();
@@ -221,6 +222,7 @@ public class NewsController extends BaseController{
 			pg.put("creatime", df.format(new Date()));
 			pg.put("clickNum", 0);
 			pg.put("content", pg.getString("editorValue"));
+			pg.put("imgPath", pg.getString("mainImgPath"));
 			pg.put("remark", StringUtil.getStrScope(pg.getString("contentTxt"), Const.STR_LENGTH));
 			newsService.insertNews(pg);
 			
@@ -274,7 +276,7 @@ public class NewsController extends BaseController{
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 			pg.put("editime", df.format(new Date()));
 			pg.put("editor", user.getNAME());
-			
+			pg.put("imgPath", pg.getString("mainImgPath"));
 			pg.put("content", pg.getString("editorValue"));
 			pg.put("remark", StringUtil.getStrScope(pg.getString("contentTxt"), Const.STR_LENGTH));
 			newsService.updateNews(pg);
