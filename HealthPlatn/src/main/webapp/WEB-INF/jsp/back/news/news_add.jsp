@@ -144,16 +144,21 @@
             
             //$("#waitDiv").show();
             //上传文件到服务器
+            var time = new Date().getTime();
             $.ajaxFileUpload({  
-	        	url: '<%=basePath%>back/uploadMainImg.do?tm="+new Date().getTime()', //后台提交地址  
+	        	url: '<%=basePath%>back/uploadMainImg.do?tm='+time, //后台提交地址  
                 secureuri: false,//异步 "
 	            fileElementId: "uploadimg",//上传控件ID  
+                contentType: false,
 	            dataType: "json",//返回的数据信息格式  
                 type:"post", //如果带附加参数，请设置type  
 	            success: function(data, status) {  
+	            	console.log(data);
 	            	if (data.msg == 'success') {  
-	                	var attach= data.path;  
-	                    $("[name=preImg]").attr("src", attach);  
+	                	var attach= data.path;
+	                	console.log(attach);
+	                    $("#preImg").attr("src", attach);  
+	                    $("#mainImgPath").val(attach); 
 // 	                   alert("上传成功");  
 	                } else {  
 	                    alert("服务器故障，稍后再试！");  
@@ -250,7 +255,7 @@
 												<tr>
 													<td align="right" valign="top">主图片</td>
 													<td valign="middle">
-														<img id="preImg" alt="" src="<%=basePath%>static/images/pre.jpg">
+														<img id="preImg" style="width:280px;height:200px" alt="" src="<%=basePath%>static/images/pre.jpg">
 														<input id="uploadimg" name="uploadimg" type="file" value="选择图片" onchange="refreshImg()" accept="image/*">
 														<label style="color: #999999;">温馨提示: 参考图片尺寸为：100*50，若选择其他尺寸的图片会出现图片压缩变形的情况，请知悉</label>
 														<input id="mainImgPath" name="mainImgPath" type="hidden">
