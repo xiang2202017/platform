@@ -99,5 +99,11 @@
 		
 		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/index.js"></script>
+		
+		<script type="text/javascript">
+			window.onload=function(){
+			      $("#jzts").hide();
+			};
+		</script>
 </body>
 </html>
