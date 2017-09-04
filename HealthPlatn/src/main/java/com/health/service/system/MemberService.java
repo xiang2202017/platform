@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.health.dao.system.DaoSupport;
+import com.health.entity.system.Member;
 import com.health.entity.system.Page;
 import com.health.system.util.PageData;
 
@@ -54,6 +55,19 @@ public class MemberService {
 	
 	public String getTypeName(Integer id) throws Exception{
 		return (String)dao.findForObject("MemberTypeMapper.getNameById", id);
+	}
+	
+	/*
+	* 登录判断
+	*/
+	public Member getMemberByNameAndPwd(PageData pd)throws Exception{
+		return (Member)dao.findForObject("MemberMapper.getMemberInfo", pd);
+	}
+	/*
+	* 更新登录时间
+	*/
+	public void updateLastLogin(PageData pd)throws Exception{
+		dao.update("MemberMapper.updateLastLogin", pd);
 	}
 	
 }

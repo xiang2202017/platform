@@ -21,8 +21,15 @@ public class Member {
 	private String password;
 	private Date createTime;
 	private Integer period;
+	private String lastLogin;
 	
 	
+	public String getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}
