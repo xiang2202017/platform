@@ -19,8 +19,22 @@ public class Member {
 	private Date expireDate;
 	private String company;
 	private String password;
+	private Date createTime;
+	private Integer period;
 	
 	
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Integer getPeriod() {
+		return period;
+	}
+	public void setPeriod(Integer period) {
+		this.period = period;
+	}
 	public Integer getId() {
 		return id;
 	}
