@@ -12,6 +12,7 @@ public class Member {
 	private String memberNo;
 	private String memberName;
 	private Integer memberType;
+	private Integer memberTypeName;
 	private Integer sex;
 	private String idcardNo;
 	private String phone;
@@ -22,8 +23,20 @@ public class Member {
 	private Date createTime;
 	private Integer period;
 	private String lastLogin;
+	private String status;
 	
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Integer getMemberTypeName() {
+		return memberTypeName;
+	}
+	public void setMemberTypeName(Integer memberTypeName) {
+		this.memberTypeName = memberTypeName;
+	}
 	public String getLastLogin() {
 		return lastLogin;
 	}

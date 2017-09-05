@@ -20,88 +20,78 @@
 
 
 	<div class="container-fluid" id="main-container">
-
-
-
 		<div id="page-content" class="clearfix">
-
 			<div class="row-fluid">
-
-
 				<div class="span12">
 					<div class="widget-box">
 						<div
 							class="widget-header widget-header-blue widget-header-flat wi1dget-header-large"
 							style="min-height:38px;height: 38px; line-height: 38px;padding-right: 8px">
-							<h4 class="lighter">产品详情</h4>
+							<h4 class="lighter">会员详情</h4>
 							<a class="lighter" style="cursor: pointer; padding-right: 8px;"
 								onclick="returntoList()">返回</a>
 						</div>
 						<div class="step-content row-fluid position-relative"></div>
 						<div class="widget-body">
-<!-- 							<input id="contentInp" type="hidden" value="${pd.content}"> -->
 
-							<div class="widget-main">
+								<div class="widget-main">
 								<div class="step-content row-fluid position-relative">
 										<table style="width: 100%">
-											<tr>
-												<th align="right">产品名</th>
-												<td><span>${pd.name }</span>
-												</td>
-											</tr>
-											<tr>
-												<th width="20%" align="right">产品类别</th>
-												<td>${pd.typeName }</td>
-<!-- 												<td><c:if test="${pd.typeId == '1' }"> -->
-<!-- 														<span class="label ">公司资讯</span> -->
-<!-- 													</c:if> <c:if test="${pd.type == '2' }"> -->
-<!-- 														<span class="label ">健康资讯</span> -->
-<!-- 													</c:if> -->
-<!-- 												</td> -->
-											</tr>
-											<tr>
-												<th align="right">产品关键词</th>
-												<td><span>${pd.keywords }</span>
-												</td>
-											</tr>
-											<tr>
-												<th align="right">价格</th>
-												<td><span>${pd.price }</span>
-												</td>
-											</tr>
-											<tr>
-												<th align="right">库存</th>
-												<td>${pd.leftNum }件
-												</td>
-											</tr>
-											<tr>
-												<th align="right">已售</th>
-												<td>${pd.sellNum }件
-												</td>
-											</tr>
-											<tr>
-												<th align="right">商品状态</th>
-												<td>
-													<c:if test="${pd.isShop == '1' }"> 
-														<span class="label ">正常</span>
-													</c:if> <c:if test="${pd.isShop == '2' }">
-														<span class="label ">已下架</span>
+												<tr>
+													<th align="right">会员编号</th>
+													<td><span>${pd.memberNo }</span>
+												</tr>
+												<tr>
+													<th align="right">会员姓名</th>
+													<td><span>${pd.memberName }</span>
+												</tr>
+												
+												<tr>
+													<th align="right">性别</th>
+													<td>
+													<c:if test="${pd.sex == '1' }"> 
+														<span class="label ">男</span>
+													</c:if> <c:if test="${pd.sex == '2' }">
+														<span class="label ">女</span>
 													</c:if>
 												</td>
-											</tr>
-										</table>
-										<hr width="100%">
-										<dl>
-											<dt>产品描述</dt>
-											<dd>
-												<div id="contentDiv">${pd.discription}</div>
-											</dd>
-										</dl>
-										
+												</tr>
+												
+												<tr>
+													<th align="right">密码</th>
+													<td><span>${pd.password }</span>
+												</tr>
+												
+												<tr>
+													<th width="20%" align="right">会员分类</th>
+													<td><span>${pd.memberTypeName }</span>
+												</tr>
+												
+												<tr>
+													<th align="right">身份证号</th>
+													<td><span>${pd.idcardNo }</span>
+												</tr>
+												<tr>
+													<th align="right">手机号码</th>
+													<td><span>${pd.phone }</span>
+												</tr>
+												<tr>
+													<th align="right">地址</th>
+													<td><span>${pd.address }</span>
+												</tr>
+												<tr>
+													<th align="right">公司</th>
+													<td><span>${pd.company }</span>
+												</tr>
+												
+												<tr>
+													<th align="right">期限</th>
+													<td><span>${pd.period }</span>
+												</tr>
+												
+											</table>
+									
 									</div>
-
-
-
 								</div>
 							</div>
 							<!--/widget-main-->

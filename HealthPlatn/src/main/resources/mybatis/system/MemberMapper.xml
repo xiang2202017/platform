@@ -7,6 +7,7 @@
 		<result column="memberNo" property="memberNo"/>
 		<result column="memberName" property="memberName"/>
 		<result column="memberType" property="memberType"/>
+		<result column="memberTypeName" property="memberTypeName"/>
 		<result column="sex" property="sex"/>
 		<result column="idcardNo" property="idcardNo"/>
 		<result column="phone" property="phone"/>
@@ -61,16 +62,33 @@
 	<!-- 修改 -->
 	<update id="update" parameterType="pd">
 		update  H_MEMBER
-			set 
+			<trim prefix="set" suffixOverrides=",">
 				memberType = #{memberType},
-				phone = #{phone},
-				address = #{address},
-				expireDate = #{expireDate},
-				company = #{company},
-				password = #{password},
-				status = #{status},
-				period = #{period},
-				lastLogin = #{lastLogin}
+				<if test="phone !='' and phone !=null">
+					phone = #{phone},
+				</if>
+				<if test="address !='' and address !=null">
+					address = #{address},
+				</if>
+				<if test="expireDate !='' and expireDate !=null">
+					expireDate = #{expireDate},
+				</if>
+				<if test="company !='' and company !=null">
+					company = #{company},
+				</if>
+				<if test="password !='' and password !=null">
+					password = #{password},
+				</if>
+				<if test="status !='' and status !=null">
+					status = #{status},
+				</if>
+				<if test="lastLogin !='' and lastLogin !=null">
+					lastLogin = #{lastLogin},
+				</if>
+				<if test="period !='' and period !=null">
+					period = #{period}
+				</if>
+			</trim>
 			where 
 				id = #{id}
 	</update>
@@ -78,9 +96,11 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="String" resultType="pd">
 		select 
+		    m.id,
 			memberNo,	
 			memberName,	
-			memberType,	
+			memberType,
+			mt.name memberTypeName,	
 			sex,	
 			idcardNo,	
 			phone,
@@ -93,20 +113,22 @@
 			period,
 			lastLogin
 		from 
-			H_MEMBER
+			H_MEMBER m
+		left join h_member_type mt on mt.id=m.memberType
 		where 
-			id = #{id}
+			m.id = #{id}
 	</select>
 	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-		    id,
+		    m.id,
 			memberNo,	
 			password,	
 			phone,	
 			memberName,	
-			memberType,	
+			memberType,
+			mt.name memberTypeName,
 			sex,	
 			idcardNo,
 			address,
@@ -117,7 +139,8 @@
 			period,
 			lastLogin
 		from 
-			H_MEMBER
+			H_MEMBER m
+		left join h_member_type mt on mt.id=m.memberType
 		where 1=1
 		<if test="pd.status != null and pd.status != ''">
 			and status = #{pd.status}

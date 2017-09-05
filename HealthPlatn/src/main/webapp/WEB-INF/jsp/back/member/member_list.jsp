@@ -62,6 +62,7 @@
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>
 						<th>序号</th>
+						<th>会员编号</th>
 						<th>会员名</th>
 						<th>类别</th>
 						<th>所在公司</th>
@@ -69,6 +70,9 @@
 						<th>身份证号</th>
 						<th>手机号</th>
 						<th>会员地址</th>
+						<th>创建时间</th>
+						<th>上次登陆</th>
+						<th>有效期限</th>
 						<th>过期日</th>
 						<th>会员状态</th>
 						<th class="center">操作</th>
@@ -89,8 +93,8 @@
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
 								<td>${member.memberNo }</td>
-								<td>${member.name }</td>
-								<td>${member.typeName }</td>
+								<td>${member.memberName }</td>
+								<td>${member.memberTypeName }</td>
 								<td>${member.company }</td>
 								<td>
 									<c:if test="${member.sex == '1' }"><span class="label label-important arrowed-in">男</span></c:if>
@@ -99,6 +103,9 @@
 								<td>${member.idcardNo }</td>
 								<td>${member.phone }</td>
 								<td>${member.address }</td>
+								<td>${member.createTime }</td>
+								<td>${member.lastLogin }</td>
+								<td>${member.period }</td>
 								<td>${member.expireDate }</td>
 								<td>
 									<c:if test="${member.status == '1' }"><span class="label label-important arrowed-in">正常</span></c:if>
@@ -114,17 +121,15 @@
 										<button class="btn btn-mini btn-info" data-toggle="dropdown"><i class="icon-cog icon-only"></i></button>
 										<ul class="dropdown-menu dropdown-icon-only dropdown-light pull-right dropdown-caret dropdown-close">
 											<c:if test="${QX.FW_QX == 1 }">
-											<li><a style="cursor:pointer;"  title="查看" onclick="viewProduct('${member.id }');" class="tooltip-warning" data-rel="tooltip" title="" data-placement="left"><span class="blue"><i class='icon-search'></i></span></a></li>
+											<li><a style="cursor:pointer;"  title="查看" onclick="viewMember('${member.id }');" class="tooltip-warning" data-rel="tooltip" title="" data-placement="left"><span class="blue"><i class='icon-search'></i></span></a></li>
 											</c:if>
 											<c:if test="${QX.edits == 1 }">
-											<li><a style="cursor:pointer;" title="编辑" onclick="editProduct('${member.id }');" class="tooltip-success" data-rel="tooltip" title="" data-placement="left"><span class="green"><i class="icon-edit"></i></span></a></li>
+											<li><a style="cursor:pointer;" title="编辑" onclick="editMember('${member.id }');" class="tooltip-success" data-rel="tooltip" title="" data-placement="left"><span class="green"><i class="icon-edit"></i></span></a></li>
 											</c:if>
 											<c:choose>
 											<c:when test="${user.USERNAME=='admin'}"></c:when>
 											<c:otherwise>
-												<c:if test="${QX.dels == 1 }">
-												<li><a style="cursor:pointer;" title="删除" onclick="delProduct('${member.id }');" class="tooltip-error" data-rel="tooltip" title="" data-placement="left"><span class="red"><i class="icon-trash"></i></span> </a></li>
-												</c:if>
+												
 											</c:otherwise>
 											</c:choose>
 										</ul>
@@ -159,12 +164,8 @@
 		<table style="width:100%;">
 			<tr>
 				<td style="vertical-align:top;">
-					<c:if test="${QX.adds == 1 }">
-					<a class="btn btn-small btn-success" onclick="add();">新增</a>
-					</c:if>
-					<c:if test="${QX.dels == 1 }">
-					<a class="btn btn-small btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='icon-trash'></i></a>
-					</c:if>
+					
+					
 				</td>
 				<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 			</tr>
@@ -209,36 +210,17 @@
 		}
 		
 		//跳转到资讯查看页面
-		function viewProduct(id){
+		function viewMember(id){
 			 top.jzts();
-			 window.location.href = "<%=basePath%>back/toProductView.do?id="+id+"&tm="+new Date().getTime();
-		}
-		
-		//新增
-		function add(){
-			 top.jzts();
-			 window.location.href = "<%=basePath%>back/toProductAdd.do?tm="+new Date().getTime();
-		}
+			 window.location.href = "<%=basePath%>back/toMemberView.do?id="+id+"&tm="+new Date().getTime();
+		}		
 		
 		//修改
-		function editProduct(id){
+		function editMember(id){
 			 top.jzts();
-			 window.location.href = "<%=basePath%>back/toProductEdit.do?id="+id+"+&tm="+new Date().getTime();
+			 window.location.href = "<%=basePath%>back/toMemberEdit.do?id="+id+"+&tm="+new Date().getTime();
 		}
-		
-		//删除
-		function delProduct(id){
-			bootbox.confirm("确定要删除这条资讯吗?", function(result) {
-				if(result) {
-					top.jzts();
-					var url = "<%=basePath%>back/deleteMember.do?id="+id+"&tm="+new Date().getTime();
-					$.get(url,function(data){
-						nextPage('${page.currentPage}');
-					});
-				}
-			});
-		}
-		
+
 		</script>
 		
 		<script type="text/javascript">
