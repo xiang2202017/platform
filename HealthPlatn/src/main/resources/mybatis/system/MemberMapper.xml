@@ -167,7 +167,7 @@
 	</update>
 	
 	<!-- 判断用户名和密码 -->
-	<select id="getMemberInfo" parameterType="pd" resultMap="MemberResultMap" useCache="false"><!-- insert update delete (flushCache="true/false") -->
+	<select id="getMemberInfo" parameterType="pd" resultType="pd" useCache="false"><!-- insert update delete (flushCache="true/false") -->
 		select * from H_member 
 		where 1=1
 		<if test="memberNo != null and password != null">
@@ -177,6 +177,17 @@
 			  	(phone = #{memberNo} and password = #{password})
 	  		)
 		</if>
+	</select>
+	
+	<!-- 判断用户名和密码 -->
+	<select id="getMemberInfoForUnique" parameterType="pd" resultType="pd" useCache="false"><!-- insert update delete (flushCache="true/false") -->
+		select * from H_member 
+		where 1=1
+	  	and	(
+		  		(phone = #{phone})
+		  		or
+		  		(idcardNo = #{idcardNo}) 
+	  		)
 	</select>
 	
 </mapper>

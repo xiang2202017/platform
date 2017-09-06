@@ -60,14 +60,24 @@ public class MemberService {
 	/*
 	* 登录判断
 	*/
-	public Member getMemberByNameAndPwd(PageData pd)throws Exception{
-		return (Member)dao.findForObject("MemberMapper.getMemberInfo", pd);
+	public PageData getMemberByNameAndPwd(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("MemberMapper.getMemberInfo", pd);
 	}
 	/*
 	* 更新登录时间
 	*/
 	public void updateLastLogin(PageData pd)throws Exception{
 		dao.update("MemberMapper.updateLastLogin", pd);
+	}
+	
+	/**
+	 * 检查会员是否唯一
+	 * @param pd
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> getMemberInfoForUnique(PageData pd) throws Exception{
+		return (List<PageData>)dao.findForList("MemberMapper.getMemberInfoForUnique", pd);
 	}
 	
 }
