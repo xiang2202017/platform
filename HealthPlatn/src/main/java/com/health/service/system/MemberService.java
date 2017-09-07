@@ -80,4 +80,21 @@ public class MemberService {
 		return (List<PageData>)dao.findForList("MemberMapper.getMemberInfoForUnique", pd);
 	}
 	
+	/**
+	 * 修改密码
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void updatePassword(PageData pd) throws Exception{
+		dao.update("MemberMapper.updatePassword", pd);
+	}
+	
+	/**
+	 * 修改手机号码
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void updatePhone(PageData pd) throws Exception{
+		dao.update("MemberMapper.updatePhone", pd);
+	}
 }

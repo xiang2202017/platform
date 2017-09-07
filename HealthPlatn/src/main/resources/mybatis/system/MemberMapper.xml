@@ -190,4 +190,18 @@
 	  		)
 	</select>
 	
+	<!-- 更新密码 -->
+	<update id="updatePassword" parameterType="pd" flushCache="false">
+		update H_member set 
+		password = #{password} 
+		where id = #{id}
+	</update>
+	
+	<!-- 更新手机 -->
+	<update id="updatePhone" parameterType="pd" flushCache="false">
+		update H_member set 
+		phone = #{phone} 
+		where id = #{id}
+	</update>
+	
 </mapper>
