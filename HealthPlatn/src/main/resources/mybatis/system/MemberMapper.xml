@@ -202,7 +202,7 @@
 		</if>
 	</select>
 	
-	<!-- 判断用户名和密码 -->
+	<!-- 判断用户是否已注册 -->
 	<select id="getMemberInfoForUnique" parameterType="pd" resultType="pd" useCache="false"><!-- insert update delete (flushCache="true/false") -->
 		select * from H_member 
 		where 1=1

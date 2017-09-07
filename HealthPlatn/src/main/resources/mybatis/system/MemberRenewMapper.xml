@@ -68,7 +68,7 @@
 		select
 		    id,
 			memberId,	
-			keywords,	
+			dealTime,	
 			failReason,	
 			requestTerm,	
 			status,	

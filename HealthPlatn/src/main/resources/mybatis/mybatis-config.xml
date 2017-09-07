@@ -16,6 +16,7 @@
 		<typeAlias type="com.health.entity.system.FMenu" alias="FMenu"/>
 		<typeAlias type="com.health.entity.system.Member" alias="Member"/>
 		<typeAlias type="com.health.entity.system.MemberRenew" alias="MemberRenew"/>
+		<typeAlias type="com.health.entity.system.MemberCancel" alias="MemberCancel"/>
 		
 		<typeAlias type="com.health.entity.system.News" alias="News"/>
 		<typeAlias type="com.health.entity.system.NewsDetail" alias="NewsDetail"/>
