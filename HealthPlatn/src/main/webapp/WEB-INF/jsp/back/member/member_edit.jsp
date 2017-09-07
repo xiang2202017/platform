@@ -32,40 +32,6 @@
 		</style>
 	
 	<script type="text/javascript">
-		function refreshImg(){
-			var url=$("#uploadimg").val();  
-			var extend=url.substring(url.indexOf(".")+1);  
-	        var ext=new Array("jpg","jpeg","png","gif","bmp");  
-	        if(ext.toString().indexOf(extend)==-1){  
-            	alert("您上传的格式不正确，仅支持jpg、jpeg、png、gif、bmp,请重新选择！");
-            	return;
-            }
-            
-            //$("#waitDiv").show();
-            //上传文件到服务器
-            $.ajaxFileUpload({  
-	        	url: 'uploadMainImg', //后台提交地址  
-                secureuri: false,//异步 "
-	            fileElementId: "uploadimg",//上传控件ID  
-	            dataType: "json",//返回的数据信息格式  
-                type:"post", //如果带附加参数，请设置type  
-	            success: function(data, status) {  
-	            	if (data.msg == 'success') {  
-	                	var attach= data.path;  
-	                    $("[name=preImg]").attr("src", attach);  
-	                   // alert("上传成功");  
-	                } else {  
-	                    alert("服务器故障，稍后再试！");  
-	                }
-	                $("#waitDiv").hide(); 
-	            }, 
-	            error: function(data, status, e) {  
-	                alert(e);
-	                $("#waitDiv").hide(); 
-	            }  
-           });
-           alert(3);
-		}
 		
 		
 	
@@ -95,103 +61,102 @@
 			<div class="widget-body">
 			 
 			 
-			 <div class="widget-main">
-			 <div class="step-content row-fluid position-relative">
+				<div class="widget-main">
+								<div class="step-content row-fluid position-relative">
 
-				<form action="back/updateProduct" name="productForm" id="productForm" method="post">
-					<div id="zhongxin">
-<!-- 					<input type="hidden" id="contentTxt" name="contentTxt"/> -->
-					<table style="width:100%;" id="xtable">
-						<tr>
-							<td align="right">产品名</td>
-							<td style="margin-top:0px;">
-								<input type="text" name="name" id="name" value="${pd.name}" />
-							</td>
-						</tr>
-						<tr>
-							<td width="20%" align="right">产品分类</td>
-							<td>
-								<input type="hidden" name="id" value="${pd.id }">
-								<select name="typeId" id="typeId">
-									<c:forEach items="${typeList }" var="item">
-										<option value="${item.id }" <c:if test="${pd.typeId == item.id}">selected</c:if>>${item.name }</option>   
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right">搜索关键词</td>
-							<td style="margin-top:0px;">
-								<input type="text" name="keywords" id="keywords" value="${pd.keywords}" />
-							</td>
-						</tr>
-						<tr>
-							<td align="right">价格</td>
-							<td>
-								 <input type="text" name="price" id="price" value="${pd.price}"/>（单位：元）
-							</td>
-						</tr>
-						<tr>
-							<td align="right">库存</td>
-							<td>
-								 <input type="text" name="leftNum" id="leftNum" value="${pd.leftNum}"/>（单位：件）
-							</td>
-						</tr>
-						<tr>
-							<td align="right">已售</td>
-							<td>
-								 <input type="text" name="sellNum" id="sellNum" value="${pd.sellNum}" readonly="readonly"/>（单位：件）
-							</td>
-						</tr>
-						<tr>
-							<td align="right">商品状态</td>
-							<td>
-								 <select name="isShop" id="isShop">
-									<option value="1" <c:if test="${pd.isShop == '1'}">selected</c:if>>正常</option>   
-									<option value="2" <c:if test="${pd.isShop == '2'}">selected</c:if>>已下架</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right" valign="top">主图片</td>
-							<td valign="middle">
-								<img id="preImg" alt="" src="<%=basePath%>static/images/pre.jpg">
-								<div id="uploadDiv">
-									<input id="uploadimg" name="uploadimg" type="file" value="选择图片" onchange="refreshImg()" accept="image/*">
-<!-- 									<input type="button" value="上传"> -->
-									<label>选择图片尺寸为：100*50</label>
+									<form action="<%=basePath%>back/updateMember" name="memberForm" id="memberForm" method="post">
+										<div id="zhongxin">
+											<table style="width:100%;" id="xtable">
+												<tr>
+													<td align="right">会员编号</td>
+													<td style="margin-top:0px;">
+													   <input type="hidden" name="id" value="${pd.id }">
+														<input type="text" name="memberNo"  readonly="readonly" id="memberNo" value="${pd.memberNo}"/>
+													</td>
+												</tr>
+												<tr>
+													<td align="right">会员姓名</td>
+													<td style="margin-top:0px;">
+														<input type="text" name="memberName" id="memberName" readonly="readonly" value="${pd.memberName}"/>
+													</td>
+												</tr>
+												
+												<tr>
+													<td align="right">密码</td>
+													<td>
+														 <input type="text" readonly="readonly" name="password" id="password" value="${pd.password}"/>
+													</td>
+												</tr>
+												
+												<tr>
+													<td width="20%" align="right">会员分类</td>
+													<td>
+														<select name="memberType" id="memberType">
+															<c:forEach items="${typeList }" var="item">
+																<option value="${item.id }" <c:if test="${pd.memberType == item.id}">selected</c:if>>${item.name }</option>     
+															</c:forEach>
+														</select>
+													</td>
+												</tr>
+												
+												<tr>
+													<td align="right">身份证号</td>
+													<td>
+														 <input type="text" readonly="readonly" name="idcardNo" id="idcardNo" value="${pd.idcardNo}"/>
+													</td>
+												</tr>
+												<tr>
+													<td align="right">手机号码</td>
+													<td>
+														 <input type="text" readonly="readonly" name="phone" id="phone" value="${pd.phone}"/>
+													</td>
+												</tr>
+												<tr>
+													<td align="right">地址</td>
+													<td>
+														 <input type="text" readonly="readonly" name="address" id="address" value="${pd.address}"/>
+													</td>
+												</tr>
+												<tr>
+													<td align="right">公司</td>
+													<td>
+														 <input type="text" readonly="readonly" name="company" id="company" value="${pd.company}"/>
+													</td>
+												</tr>
+												
+												<tr>
+												<td align="right">会员状态</td>
+												<td>
+													 <select name="status" id="status">
+														<option value="1" <c:if test="${pd.status == '1'}">selected</c:if>>正常</option>   
+														<option value="2" <c:if test="${pd.status == '2'}">selected</c:if>>已过期</option>
+													</select>
+												</td>
+												</tr>
+												
+												<tr>
+												<td align="right">过期时间</td>
+												<td>
+													  <input type="text" name="expireDate" id="expireDate" value="${pd.expireDate}"/>
+												</td>
+												</tr>
+												
+												<tr>
+												<td></td>
+												<td id="nr" align="right">
+														<button type="button" onclick="formSubmit()">保存</button>
+														<button type="reset" onclick="cancel()">取消</button>
+												</td>
+											</tr>
+											</table>
+										</div>
+									</form>
+
+
+
 								</div>
-								
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-								<img id="imgPath" name="imgPath" alt="" src="">
-							</td>
-						</tr>
-						<tr>
-							<td align="right" valign="top">产品描述</td>
-							<td id="nr">
-								<input type="hidden" id="contentInp" name="contentInp" value="${pd.discription }">
-								 <script id="editor" type="text/plain" style="width:96%;height:259px;"></script>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td id="nr" align="right">
-									<button type="button" onclick="formSubmit()">保存</button>
-									<button type="reset" onclick="cancel()">取消</button>
-							</td>
-						</tr>
-					</table>
-					</div>
-				</form>
-
-
-
-			 </div> 
-			 </div><!--/widget-main-->
+							</div>
+							<!--/widget-main-->
 			</div><!--/widget-body-->
 		</div>
 	</div>
@@ -244,24 +209,7 @@
 			});
 			
 			function formSubmit(){
-				var error = "";
-				var name = $("#name").val();
-				var keywords = $("#keywords").val();
-				if(name.length == 0 ){
-					error += "标题不能为空\n";
-				}
-				if(keywords.length == 0){
-					error += "关键字不能为空\n";
-				}
-				//alert(error);
-				if(error.length != 0){
-					bootbox.alert(error);
-					return;
-				}
-				
-				var txt = UE.getEditor('editor').getContentTxt();
-				$("#contentInp").val(txt);
-				$("#productForm").submit();
+				$("#memberForm").submit();
 			}
 			
 			function cancel(){
