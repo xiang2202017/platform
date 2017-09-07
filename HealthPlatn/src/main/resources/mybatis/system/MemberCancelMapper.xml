@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberCancelMapper">
+	
+	<resultMap type="MemberCancel" id="MemberCancelResultMap">
+		<id column="id" property="id"/>
+		<result column="memberId" property="memberId"/>
+		<result column="cancelReason" property="cancelReason"/>
+		<result column="status" property="status"/>
+		<result column="createTime" property="createTime"/>
+		<result column="dealTime" property="dealTime"/>
+		<result column="failReason" property="failReason"/>
+	</resultMap>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into h_member_cancel(
+			memberId,	
+			cancelReason,	
+			status,	
+			createTime,	
+			dealTime,	
+			failReason
+		) values (
+			#{memberId},	
+			#{cancelReason},	
+			#{status},	
+			#{createTime},	
+			#{dealTime},
+			#{failReason}			
+		)
+	  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id" >
+        	SELECT LAST_INSERT_ID() AS ID   
+      </selectKey>
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="pd">
+		update  h_member_cancel
+			set 
+				memberId = #{memberId},
+				cancelReason = #{cancelReason},
+				status = #{status},
+				createTime = #{createTime},
+				dealTime = #{dealTime},
+				failReason = #{failReason}
+			where 
+				id = #{id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="String" resultType="pd">
+		select 
+			memberId,	
+			cancelReason,	
+			status,	
+			createTime,	
+			dealTime,	
+			failReason
+		from 
+			h_member_cancel
+		where 
+			id = #{id}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		    id,
+			memberId,	
+			dealTime,	
+			failReason,	
+			cancelReason,	
+			status,	
+			createTime	
+		from 
+			h_member_cancel
+		where 1=1
+		<if test="pd.createTime != null and pd.createTime != ''">
+			and createTime = #{pd.createTime}
+		</if>
+		<if test="pd.memberId != null and pd.memberId != ''"><!-- 关键词检索 -->
+			and memberId = #{pd.memberId}
+		</if>
+	</select>
+	
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from h_member_cancel
+		where 
+			id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="Integer">
+		delete from h_member_cancel
+		where 
+			id = #{id}
+	</delete>
+	
+</mapper>
