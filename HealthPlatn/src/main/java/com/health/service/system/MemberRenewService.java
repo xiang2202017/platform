@@ -16,25 +16,30 @@ public class MemberRenewService {
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 	
-	//删除会员
+	//删除会员续约
 	public void deleteMemberRenewById(Integer id) throws Exception{
 		dao.delete("MemberRenewMapper.delete", id);			//删除会员续约申请
 	}
 	
-	//批量删除会员
+	//批量删除会员续约
 	public void deleteAllMemberRenews(String[] ids) throws Exception{
 		dao.delete("MemberRenewMapper.deleteAll", ids);
 	}
 	
-	//添加会员
+	//添加会员续约
 	public Integer insertMemberRenew(PageData pd) throws Exception{
 		return (Integer)dao.save("MemberRenewMapper.save", pd);
 	}
 	
-	//根据id查找会员信息
+	//根据id查找会员续约信息
 	public PageData getMemberRenewById(String id) throws Exception{
 		return (PageData)dao.findForObject("MemberRenewMapper.findById", id);
 	}
+	
+//	//根据id查找会员续约信息
+//	public PageData getMemberRenewByMemberId(String id) throws Exception{
+//		return (PageData)dao.findForObject("MemberRenewMapper.findByMemberId", id);
+//	}
 	
 	//分页查询
 	@SuppressWarnings("unchecked")
@@ -42,7 +47,13 @@ public class MemberRenewService {
 		return (List<PageData>)dao.findForList("MemberRenewMapper.datalistPage", page);
 	}
 	
-	//编辑会员信息
+	//获取最后5条数据
+	@SuppressWarnings("unchecked")
+	public List<PageData> getLastList(String id) throws Exception{
+		return (List<PageData>)dao.findForList("MemberRenewMapper.getLastList", id);
+	}
+	
+	//编辑会员续约信息
 	public void updateMemberRenew(PageData pd) throws Exception{
 		dao.update("MemberRenewMapper.update", pd);
 	}

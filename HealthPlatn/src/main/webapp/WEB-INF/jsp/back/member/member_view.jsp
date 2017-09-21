@@ -76,11 +76,7 @@
 													<td><span>${pd.phone }</span>
 												</tr>
 												<tr>
-													<th align="right">地址</th>
-													<td><span>${pd.address }</span>
-												</tr>
-												<tr>
-													<th align="right">公司</th>
+													<th align="right">所属分公司</th>
 													<td><span>${pd.company }</span>
 												</tr>
 												
@@ -90,7 +86,43 @@
 												</tr>
 												
 											</table>
-									
+									<h4 class="lighter">会员收货地址</h4>
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>序号</th>
+												<th>收货人</th>
+												<th>手机</th>
+												<th>地址</th>
+												<th>邮编</th>
+												<th>是否默认</th>
+											</tr>
+										</thead>
+										<tbody>
+										<c:choose>
+											<c:when test="${not empty memberAddressList}">
+												<c:forEach items="${memberAddressList}" var="item" varStatus="vs">
+													<tr>
+														<td class='center' style="width: 30px;">${vs.index+1}</td>
+														<td>${item.name }</td>
+														<td>${item.phone }</td>
+														<td>${item.address }</td>
+														<td>${item.postCode }</td>
+														<td>
+															<c:if test="${item.isDefault == '1' }">是</c:if>
+															<c:if test="${item.isDefault == '2' }">否</c:if>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr class="main_info">
+													<td colspan="100" class="center">该会员还没有添加收货地址！</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
+										</tbody>
+									</table>
 									</div>
 								</div>
 							</div>

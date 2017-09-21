@@ -26,6 +26,10 @@ public class SendSmsUtil {
     
 	/**
 	 * 短信验证码发送方法
+	 * @param phone 要发送的手机号码
+	 * @param params 发送的json格式变量字符串，如：String params = "{\"number\":"+ num +"}",其中number表示templateCode模版中的变量名，发送的变量名和模板中的变量名必须一致
+	 * @param signName 短信签名,取值Const.SMS_SIGN_NAME
+	 * @param templateCode 短信模版,取值Const.SMS_TEMPLATE_XXX
 	 */
 	public static SendSmsResponse sendCodeSms(String phone, String params, String signName, String templateCode) throws ClientException{
 		try{

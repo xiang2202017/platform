@@ -36,10 +36,21 @@ public class MemberCancelService {
 		return (PageData)dao.findForObject("MemberCancelMapper.findById", id);
 	}
 	
+	//根据id查找会员解约信息
+	public PageData getMemberCancelByMemberId(String id) throws Exception{
+		return (PageData)dao.findForObject("MemberCancelMapper.findByMemberId", id);
+	}
+	
 	//分页查询
 	@SuppressWarnings("unchecked")
 	public List<PageData> getDatalistPage(Page page) throws Exception {
 		return (List<PageData>)dao.findForList("MemberCancelMapper.datalistPage", page);
+	}
+	
+	//获取最后5条数据
+	@SuppressWarnings("unchecked")
+	public List<PageData> getLastList(String id) throws Exception{
+		return (List<PageData>)dao.findForList("MemberCancelMapper.getLastList", id);
 	}
 	
 	//编辑会员解约信息

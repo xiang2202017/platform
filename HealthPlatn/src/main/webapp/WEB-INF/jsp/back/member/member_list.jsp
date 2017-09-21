@@ -31,7 +31,7 @@
 				
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="keywords" type="text" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词" />
+							<input autocomplete="off" id="memberNo" type="text" name="memberNo" value="${pd.memberNo }" placeholder="这里输入会员号" />
 						</span>
 					</td>
 					<td style="vertical-align:top;"> 
@@ -40,10 +40,20 @@
 						</span>
 					</td>
 					<td style="vertical-align:top;"> 
+					 	<span class="input-icon">
+							<input autocomplete="off" id="phone" type="text" name="phone" value="${pd.phone }" placeholder="这里输入电话号码" />
+						</span>
+					</td>
+					<td style="vertical-align:top;"> 
 					 	<select class="chzn-select" name="typeId" id="typeId" data-placeholder="请选择会员类别" style="vertical-align:top;width: 120px;">
 							<option value="" selected="selected">所有</option> 
 							<c:forEach items="${typeList }" var="item">
-								<option value="${item.id }" >${item.name }</option>
+								<c:if test="${item.id == pd.memberType }">
+									<option value="${item.id }" selected="selected">${item.name }</option>
+								</c:if>
+								<c:if test="${item.id != pd.memberType }">
+									<option value="${item.id }">${item.name }</option>
+								</c:if>
 							</c:forEach>
 							
 					  	</select>

@@ -24,6 +24,7 @@ public class Member {
 	private Integer period;
 	private String lastLogin;
 	private String status;
+	private String editime;
 	
 	public String getStatus() {
 		return status;
@@ -120,6 +121,12 @@ public class Member {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getEditime() {
+		return editime;
+	}
+	public void setEditime(String editime) {
+		this.editime = editime;
 	}
 	
 	

@@ -19,6 +19,7 @@
 		<result column="createTime" property="createTime"/>
 		<result column="period" property="period"/>
 		<result column="lastLogin" property="lastLogin"/>
+		<result column="editime" property="editime"/>
 	</resultMap>
 	
 	<!-- 新增-->
@@ -86,7 +87,10 @@
 					lastLogin = #{lastLogin},
 				</if>
 				<if test="period !='' and period !=null">
-					period = #{period}
+					period = #{period},
+				</if>
+				<if test="editime !='' and editime !=null">
+					editime = #{editime}
 				</if>
 			</trim>
 			where 
@@ -111,7 +115,8 @@
 			status,
 			createTime,
 			period,
-			lastLogin
+			lastLogin,
+			editime
 		from 
 			H_MEMBER m
 		left join h_member_type mt on mt.id=m.memberType
@@ -137,7 +142,8 @@
 			status,
 			createTime,
 			period,
-			lastLogin
+			lastLogin,
+			editime
 		from 
 			H_MEMBER m
 		left join h_member_type mt on mt.id=m.memberType
@@ -160,6 +166,7 @@
 		<if test="pd.idcardNo != null and pd.idcardNo != ''"><!-- 关键词检索 -->
 			and idcardNo = #{pd.idcardNo}
 		</if>
+		order by createTime desc, editime desc
 	</select>
 	
 	

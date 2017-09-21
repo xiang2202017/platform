@@ -189,11 +189,23 @@ public class FMenuController extends BaseController {
 		
 		String ctime = pd.getString("creatime");
 		String timestr = (ctime.equals("") || ctime == null) ? pd.getString("editime") : ctime;
-		String headstr = CustomUtil.getNewsHeader(pd.getString("title"), timestr, pd.get("clickNum")+"");
+		String imgpath = pd.getString("imgPath");
+		String headstr = CustomUtil.getNewsHeader(pd.getString("title"), imgpath, timestr, pd.get("clickNum")+"");
 		model.addAttribute("content", headstr + pd.getString("content"));
 		model.addAttribute("previousNews", prePd);
 		model.addAttribute("nextNews", nextPd);
 		return "front/news/news_view";
+	}
+	
+	/**
+	 * 跳转到联系我们的页面
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/web/contactUs",method=RequestMethod.POST)
+	public String toContactUs(ModelMap model) throws Exception{
+		return "front/contact";
 	}
 	
 	//============================================================

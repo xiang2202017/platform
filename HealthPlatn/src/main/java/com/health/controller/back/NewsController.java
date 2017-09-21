@@ -137,7 +137,8 @@ public class NewsController extends BaseController{
 		
 		String ctime = pd.getString("creatime");
 		String timestr = (ctime.equals("") || ctime == null) ? pd.getString("editime") : ctime;
-		String headstr = CustomUtil.getNewsHeader(pd.getString("title"), timestr, pd.get("clickNum")+"");
+		String imgpath = pd.getString("imgPath");
+		String headstr = CustomUtil.getNewsHeader(pd.getString("title"), imgpath, timestr, pd.get("clickNum")+"");
 		pd.put("content", headstr + pd.getString("content"));
 		mv.addObject("pd", pd);
 		mv.setViewName("back/news/news_view");

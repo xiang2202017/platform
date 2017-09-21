@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 public class Const {
 	public static final String SESSION_SECURITY_CODE = "sessionSecCode";
 	public static final String SESSION_USER = "sessionUser";
+	public static final String SESSION_MEMBER = "sessionMember";
 	public static final String SESSION_ROLE_RIGHTS = "sessionRoleRights";
 	public static final String SESSION_menuList = "menuList";			//当前菜单
 	public static final String SESSION_allmenuList = "allmenuList";		//全部菜单
@@ -19,6 +20,7 @@ public class Const {
 	public static final String TRUE = "T";
 	public static final String FALSE = "F";
 	public static final String LOGIN = "/login_toLogin.do";				//登录地址
+	public static final String MEMBER_LOGIN = "/web/member/member_login";	//会员登录地址
 	public static final String SYSNAME = "admin/config/SYSNAME.txt";	//系统名称路径
 	public static final String PAGE	= "admin/config/PAGE.txt";			//分页条数配置路径
 	public static final String EMAIL = "admin/config/EMAIL.txt";		//邮箱服务器配置路径
@@ -37,8 +39,8 @@ public class Const {
 	public static final Integer MENU_PRODUCT = 3;		//菜单id号
 	
 	
-	public static final String FILE_UPLOAD_TEMP = "uploadFiles/uploadImgs/temp/";
-	public static final String FILE_UPLOAD_DIR = "uploadFiles/uploadImgs/normal/";
+	public static final String FILE_UPLOAD_TEMP = "\\uploadFiles\\uploadImgs\\temp\\";
+	public static final String FILE_UPLOAD_DIR = "\\uploadFiles\\uploadImgs\\normal\\";
 	
 	public static ApplicationContext WEB_APP_CONTEXT = null; //该值会在web容器启动时由WebAppContextListener初始化
 	
@@ -56,8 +58,40 @@ public class Const {
 	public static final String[] APP_GETAPPUSER_PARAM_ARRAY = new String[]{"USERNAME"};
 	public static final String[] APP_GETAPPUSER_VALUE_ARRAY = new String[]{"用户名"};
 	
-
+	//登录用户类型
+	public static final String LOGIN_TYPE_ADMIN = "Admin";
+	public static final String LOGIN_TYPE_USER = "User";
 	
+	//会员类型
+	public static final String MEMBER_TYPE_CUSTOMER = "1";
+	public static final String MEMBER_TYPE_BUSSINESS = "2";
+	
+	//会员状态
+	public static final String MEMBER_STATUS_NORMAL = "1";	//正常
+	public static final String MEMBER_STATUS_EXPIRE = "2";	//过期
+	
+	//会员续约状态
+	public static final String MEMBER_RENEW_STATUS_FAIL = "3";//申请失败
+	public static final String MEMBER_RENEW_STATUS_DONE = "4";//已签约
+	public static final String MEMBER_RENEW_STATUS_EXPIRE = "5";//已过期
+	
+	//短信相关
+	public static final String SMS_SIGN_NAME = "绿色产品购物网站";//短信签名
+	public static final String SMS_TEMPLATE_CODE = "SMS_94945019";//短信验证码模版
+	
+	//短信通知模版（续解约申请提醒）: 
+	//尊敬的${name}，您的会员资格即将在一个星期后过期，为了不影响您的使用，请尽快登录网站进行续约或解约申请！
+	//参数说明: name:会员名
+	public static final String SMS_TEMPLATE_INFO = "SMS_95030013";	
+	//短信通知成功模版（续解约申请成功提醒）:
+	//模版内容：尊敬的${name}（会员号：${cardno}），您的会员${type}申请已成功，请您前往附近门店办理相关手续
+	//参数说明：name:会员名, cardno:会员号, type:赋值为"续约"或"解约"
+	public static final String SMS_TEMPLATE_INFO_OK = "SMS_95760009";	
+	
+	public static final String SMS_TEMPLATE_PHONE = "SMS_95760006";	//修改手机号码
+	public static final String SMS_TEMPLATE_PWD = "SMS_95750010";  //忘记密码手机验证
+	public static final int SESSION_SMS_TIME = 5;	//session中存储的短信验证码的有效时长（分钟）
+	public static final int SMS_SEND_MAX_NUM = 3;		//手机每天发送验证码的最大次数
 
 	
 }

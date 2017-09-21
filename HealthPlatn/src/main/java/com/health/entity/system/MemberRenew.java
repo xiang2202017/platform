@@ -14,8 +14,22 @@ public class MemberRenew {
 	private String createTime;
 	private String dealTime;
 	private String failReason;
+	private String memberNo;
+	private String memberName;
 	
 	
+	public String getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
+	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 	public Integer getId() {
 		return id;
 	}

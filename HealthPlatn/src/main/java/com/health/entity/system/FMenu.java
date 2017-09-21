@@ -7,8 +7,10 @@ import java.util.List;
  * @author XiangYu
  *
  */
-public class FMenu {
+public class FMenu implements java.io.Serializable{
 	
+	private static final long serialVersionUID = -3377470300833755533L;
+
 	private Integer menu_id;
 	private String menu_name;
 	private String menu_url;

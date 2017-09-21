@@ -27,6 +27,7 @@ import com.health.entity.system.User;
 import com.health.service.system.MenuService;
 import com.health.service.system.RoleService;
 import com.health.service.system.UserService;
+import com.health.system.interceptor.shiro.CustomizedToken;
 import com.health.system.util.AppUtil;
 import com.health.system.util.Const;
 import com.health.system.util.DateUtil;
@@ -127,7 +128,8 @@ public class LoginController extends BaseController {
 						
 						//shiro加入身份验证
 						Subject subject = SecurityUtils.getSubject(); 
-					    UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD); 
+					    //UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD); 
+						CustomizedToken token = new CustomizedToken(USERNAME, PASSWORD, Const.LOGIN_TYPE_ADMIN);
 					    try { 
 					        subject.login(token); 
 					    } catch (AuthenticationException e) { 

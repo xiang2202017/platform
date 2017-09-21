@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.health.dao.system.DaoSupport;
-import com.health.entity.system.Member;
 import com.health.entity.system.Page;
 import com.health.system.util.PageData;
 
@@ -96,5 +95,37 @@ public class MemberService {
 	 */
 	public void updatePhone(PageData pd) throws Exception{
 		dao.update("MemberMapper.updatePhone", pd);
+	}
+	
+	///////////////////////////////////短信验证码/////////////////////////////////
+	
+	/**
+	 * 更新短信验证码发送次数，有则更新，无则添加
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void updatePhoneSendNum(PageData pd) throws Exception{
+		String hasrecord = pd.get("hasrecord").toString();
+		if(hasrecord.equals("y")){
+			dao.update("phoneSendNumMapper.update", pd);
+		}else{
+			insertPhoneSendNum(pd);
+		}
+	}
+	
+	public void updatePhoneSendNum_sub(PageData pd) throws Exception{
+		dao.update("phoneSendNumMapper.update", pd);
+	}
+	
+	private void insertPhoneSendNum(PageData pd) throws Exception{
+		dao.save("phoneSendNumMapper.save", pd);
+	}
+	
+	public void deletePhoneSendNum(String phone) throws Exception{
+		dao.delete("phoneSendNumMapper.delete", phone);
+	}
+	
+	public PageData selectPhoneSendNum(String phone) throws Exception{
+		return (PageData)dao.findForObject("phoneSendNumMapper.findbyphone", phone);
 	}
 }
