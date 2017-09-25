@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateUtil {
 	private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
@@ -17,6 +18,8 @@ public class DateUtil {
 
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
+	
+	private static String formatstr = "yyyy-MM-dd HH:mm:ss";
 
 	/**
 	 * 获取YYYY格式
@@ -100,6 +103,13 @@ public class DateUtil {
 			return false;
 		}
 	}
+	
+	/**
+	 * 获得时间年差
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
 	public static int getDiffYear(String startTime,String endTime) {
 		DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -138,21 +148,58 @@ public class DateUtil {
     }
     
     /**
-     * 得到n天之后的日期
+     * 得到n年之后的今天（未测试）
      * @param days
      * @return
      */
-    public static String getAfterDayDate(String days) {
-    	int daysInt = Integer.parseInt(days);
+    public static String getAfterYearsDate(int years) {
+    	Calendar cal = new GregorianCalendar();
+        int year = cal.get(Calendar.YEAR)+years;//yy  直接计算年数+2
+        int month = cal.get(Calendar.MONTH) + 1;//MM
+        int day = cal.get(Calendar.DATE);//dd
+        int hour = cal.get(Calendar.HOUR_OF_DAY);//HH
+        int minute = cal.get(Calendar.MINUTE);//mm
+         
+        if (formatstr.indexOf("yy") != -1) {
+        	formatstr = formatstr.replaceAll("yy", String.valueOf(year).substring(2));
+        }
+        if (formatstr.indexOf("MM") != -1) {
+        	formatstr = formatstr.replaceAll("MM", month < 10 ? "0" + String.valueOf(month)
+                    : String.valueOf(month));
+        }
+        if(formatstr.indexOf("HH")!=-1){
+        	formatstr = formatstr.replaceAll("HH", hour<10 ? "0" + String.valueOf(hour):String.valueOf(hour));
+        }
+        if (formatstr.indexOf("dd") != -1) {
+            formatstr = formatstr.replaceAll("dd", day < 10 ? "0" + String.valueOf(day)
+                    : String.valueOf(day));
+        }
+        if (formatstr.indexOf("mm") != -1) {
+            formatstr = formatstr.replaceAll(
+                    "mm",
+                    minute < 10 ? "0" + String.valueOf(minute) : String
+                            .valueOf(minute));
+        }
+        return formatstr;
+    }
+    
+    /**
+     * 得到指定日期n天之后的日期
+     * @param days
+     * @return
+     */
+    public static Date getAfterDayDate(Date cdate, Integer days) {
     	
         Calendar canlendar = Calendar.getInstance(); // java.util包
-        canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
+        canlendar.setTime(cdate);
+        canlendar.add(Calendar.DATE, days); // 日期减 如果不够减会将月变动
         Date date = canlendar.getTime();
         
-        SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateStr = sdfd.format(date);
+        //SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //String dateStr = sdfd.format(date);
         
-        return dateStr;
+        //return dateStr;
+        return date;
     }
     
     /**
@@ -171,6 +218,41 @@ public class DateUtil {
         String dateStr = sdf.format(date);
         
         return dateStr;
+    }
+    
+    /**
+     * 判断日期是否为今天
+     * @param date
+     * @return
+     */
+    public static boolean isToday(Date date){
+    	Calendar c1 = Calendar.getInstance();              
+    	c1.setTime(date);                                 
+    	int year1 = c1.get(Calendar.YEAR);
+    	int month1 = c1.get(Calendar.MONTH)+1;
+    	int day1 = c1.get(Calendar.DAY_OF_MONTH);     
+    	
+    	Calendar c2 = Calendar.getInstance(); 
+    	c2.setTime(new Date());
+    	int year2 = c2.get(Calendar.YEAR);
+    	int month2 = c2.get(Calendar.MONTH)+1;
+    	int day2 = c2.get(Calendar.DAY_OF_MONTH);   
+    	if(year1 == year2 && month1 == month2 && day1 == day2){
+    	   return true;
+    	 }
+    	return false;
+    }
+    
+    /**
+     * 获取当前时间
+     * @param date
+     * @return 相隔的分钟数
+     */
+    public static int getDisMinute(Date beginDate, Date endDate){
+    	long beginTime = beginDate.getTime();
+    	long endTime = endDate.getTime();
+    	long time = endTime - beginTime;
+    	return (int) (time / (60*1000));
     }
     
     public static void main(String[] args) {
