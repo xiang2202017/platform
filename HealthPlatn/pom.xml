@@ -524,6 +524,24 @@
 		    <artifactId>hibernate-validator</artifactId>  
 		    <version>5.2.4.Final</version>  
 		</dependency>
+		
+		<!-- 发送短信服务 -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-sms</artifactId>
+            <version>3.0.0-rc1</version>
+        </dependency>
+        
+        <dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.29</version>
+		</dependency>
     
   </dependencies>
   <build>
