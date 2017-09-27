@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
 import com.health.entity.system.Member;
 import com.health.entity.system.MemberCancel;
 import com.health.entity.system.MemberRenew;
@@ -70,7 +71,9 @@ public class MemberTaskService {
 			for (int i = 0; i < list.size(); i++) {
 				// 发短信
 				Member m = list.get(i);
-				SendSmsUtil.sendCodeSms(m.getPhone(), "{\"name\":"+ m.getMemberName() +"}", 
+				JSONObject param = new JSONObject();
+				param.put("name", m.getMemberName());
+				SendSmsUtil.sendCodeSms(m.getPhone(), param.toJSONString(), 
 						                        Const.SMS_SIGN_NAME, Const.SMS_TEMPLATE_INFO);
 			}
 		} catch (Exception e) {
@@ -95,8 +98,12 @@ public class MemberTaskService {
 				// 发短信
 				Member m = getMemberById(cancels.get(i).getMemberId(),list);
 				if(m!=null){
-					SendSmsUtil.sendCodeSms(m.getPhone(), "{\"name\":"+ m.getMemberName() +"}", 
-	                        Const.SMS_SIGN_NAME, Const.SMS_TEMPLATE_INFO);
+					JSONObject param = new JSONObject();
+					param.put("name", m.getMemberName());
+					param.put("cardno", m.getMemberNo());
+					param.put("type", "解约");
+					SendSmsUtil.sendCodeSms(m.getPhone(), param.toJSONString(), 
+	                        Const.SMS_SIGN_NAME, Const.SMS_TEMPLATE_INFO_OK);
 				}
 			}
 			
@@ -106,8 +113,12 @@ public class MemberTaskService {
 				// 发短信
 				Member m = getMemberById(renews.get(i).getMemberId(),list);
 				if(m!=null){
-					SendSmsUtil.sendCodeSms(m.getPhone(), "{\"name\":"+ m.getMemberName() +"}", 
-	                        Const.SMS_SIGN_NAME, Const.SMS_TEMPLATE_INFO);
+					JSONObject param = new JSONObject();
+					param.put("name", m.getMemberName());
+					param.put("cardno", m.getMemberNo());
+					param.put("type", "续约");
+					SendSmsUtil.sendCodeSms(m.getPhone(), param.toJSONString(), 
+	                        Const.SMS_SIGN_NAME, Const.SMS_TEMPLATE_INFO_OK);
 				}
 			}
 		} catch (Exception e) {
