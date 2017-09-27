@@ -65,7 +65,10 @@
 	<update id="update" parameterType="pd">
 		update  h_member_cancel
 			set 
+				memberId = #{memberId},
+				cancelReason = #{cancelReason},
 				status = #{status},
+				createTime = #{createTime},
 				dealTime = #{dealTime},
 				failReason = #{failReason},
 				operator = #{operator}
@@ -131,6 +134,9 @@
 			</choose>
 		</if>
 		order by createTime
+		<if test="pd.memberId != null and pd.memberId != ''"><!-- 关键词检索 -->
+			and memberId = #{pd.memberId}
+		</if>
 	</select>
 	
 	<!-- 列表 -->
@@ -161,8 +167,6 @@
 		</foreach>
 	</delete>
 	
-	
-	
 	<!-- 删除-->
 	<delete id="delete" parameterType="Integer">
 		delete from h_member_cancel
@@ -170,4 +174,34 @@
 			id = #{id}
 	</delete>
 	
+	<select id="getNeedCancelMembers" parameterType="Integer" resultMap="MemberCancelResultMap">
+	  select * from h_member_cancel
+		where status=1 and
+			memberId in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                 #{item.id}
+		</foreach>
+	</select>
+	
+	<update id="updateAll" parameterType="String">
+		update h_member_cancel 
+		<set> 
+			<if test="status != null and status != ''">
+				 status = #{status},
+			</if>
+			<if test="memberId != null and memberId != ''">
+				 memberId = #{memberId},
+			</if>
+			<if test="failReason != null and failReason != ''">
+				 failReason = #{failReason},
+			</if>
+			<if test="cancelReason != null and cancelReason != ''">
+				 cancelReason = #{cancelReason},
+			</if>
+			<if test="dealTime != null and dealTime != ''">
+				 dealTime = #{dealTime},
+			</if>
+		</set> 
+		where id = #{id}
+	</update>
 </mapper>

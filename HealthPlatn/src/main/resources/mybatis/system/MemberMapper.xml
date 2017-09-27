@@ -234,4 +234,20 @@
 		where id = #{id}
 	</update>
 	
+	<select id="getMembersInNDays" parameterType="net.sf.json.JSONObject" resultMap="MemberResultMap">
+		select * from H_member
+		where expireDate &gt;= #{now} and expireDate &lt;= #{expire}
+	</select>
+	
+	<select id="getMembersByExpireDate" parameterType="String" resultMap="MemberResultMap">
+		select * from H_member
+		where expireDate &lt;= #{date}
+	</select>
+	
+	<update id="updateStatus" parameterType="String">
+		update H_member set 
+		status = "2"
+		where id = #{id}
+	</update>
+	
 </mapper>

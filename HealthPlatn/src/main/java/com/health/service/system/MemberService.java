@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Service;
 
 import com.health.dao.system.DaoSupport;
+import com.health.entity.system.Member;
 import com.health.entity.system.Page;
 import com.health.system.util.PageData;
 
@@ -127,5 +130,30 @@ public class MemberService {
 	
 	public PageData selectPhoneSendNum(String phone) throws Exception{
 		return (PageData)dao.findForObject("phoneSendNumMapper.findbyphone", phone);
+	}
+	
+	/**
+	 * 查询今天过期的会员
+	 * @throws Exception 
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Member> getMembersByExpireDate(String date) throws Exception {
+		return (List<Member>)dao.findForList("MemberMapper.getMembersByExpireDate", date);
+	}
+	
+	/**
+	 * 查询还有n天过期的会员
+	 * @throws Exception 
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Member> getMembersInNDays(String now,String expire) throws Exception {
+		JSONObject param = new JSONObject();
+		param.put("now", now);
+		param.put("expire", expire);
+		return (List<Member>)dao.findForList("MemberMapper.getMembersInNDays", param);
+	}
+
+	public void updateStatus(int id) throws Exception {
+		dao.update("MemberMapper.updateStatus", id);
 	}
 }

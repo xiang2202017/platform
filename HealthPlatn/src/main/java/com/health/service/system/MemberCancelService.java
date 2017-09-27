@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.health.dao.system.DaoSupport;
+import com.health.entity.system.Member;
+import com.health.entity.system.MemberCancel;
 import com.health.entity.system.Page;
 import com.health.system.util.PageData;
 
@@ -56,6 +58,15 @@ public class MemberCancelService {
 	//编辑会员解约信息
 	public void updateMemberCancel(PageData pd) throws Exception{
 		dao.update("MemberCancelMapper.update", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MemberCancel> getNeedCancelMembers(List<Member> list) throws Exception {
+		return (List<MemberCancel>)dao.findForList("MemberCancelMapper.getNeedCancelMembers", list);
+	}
+	
+	public void updateALl(MemberCancel m) throws Exception {
+		dao.update("MemberCancelMapper.updateAll", m);
 	}
 	
 }
