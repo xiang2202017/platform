@@ -47,27 +47,31 @@ public class MemberTaskService {
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
-	 * 每天中午12点运行
+	 * 每天中午12点运行,发送短信提醒
 	 */
 	@Scheduled(cron = "0 0 12 * * ?")
 	public void checkMemberStatus() {
-		// 查看十天后到期的会员
+		// 查看十天后到期的会员（没有进行解约或续约申请），发送短信提醒进行申请
 		sendMessageBeforTenDays();
-
-		// 查看已经通过续约或解约申请的会员，过期前三天发送提醒
+		// 查看三天后到期的会员，而且已经通过续约或解约申请的会员，发送短信提醒去门店办理
 		sendMessageBeforTHreeDays();
-
-		// 设置会员状态,设置过期
-		changeMemberStatus();
 	}
 
 	/**
-	 * 十天过期，发送信息
+	 * 每天23:59:59运行，检查今天过期但没有进行解约续约的会员，设置为过期
+	 */
+	@Scheduled(cron = "59 59 23 * * ?")
+	public void setMemberStatus() {
+		changeMemberStatus();
+	}
+	
+	/**
+	 * 十天过期（但没有进行解约或续约申请的），发送信息提醒
 	 */
 	private void sendMessageBeforTenDays() {
 		try {
-			//查询到10天或者小于十天过期的会员
-			List<Member> list = memberService.getMembersInNDays(format.format(getNextDay(0)),format.format(getNextDay(10)));
+			//查询到10天或者小于十天过期的会员,但还没有申请
+			List<Member> list = memberService.getMembersInNDays(format.format(getNextDay(0)),format.format(getNextDay(10)),1);
 			for (int i = 0; i < list.size(); i++) {
 				// 发短信
 				Member m = list.get(i);
@@ -86,8 +90,8 @@ public class MemberTaskService {
 	 */
 	private void sendMessageBeforTHreeDays() {
 		try {
-			//查询到三天或者三天之内过期的会员
- 			List<Member> list = memberService.getMembersInNDays(format.format(getNextDay(0)),format.format(getNextDay(3)));
+			//查询到三天或者三天之内过期的会员，已经申请过
+ 			List<Member> list = memberService.getMembersInNDays(format.format(getNextDay(0)),format.format(getNextDay(3)),2);
 			if(list == null || list.size()<=0){
 				return;
 			}

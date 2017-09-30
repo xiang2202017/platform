@@ -237,11 +237,15 @@
 	<select id="getMembersInNDays" parameterType="net.sf.json.JSONObject" resultMap="MemberResultMap">
 		select * from H_member
 		where expireDate &gt;= #{now} and expireDate &lt;= #{expire}
+		<if test="type ==1 ">
+		 and id not in(SELECT memberId from h_member_renew)
+		 and id not in(SELECT memberId from h_member_cancel)
+		</if>
 	</select>
 	
 	<select id="getMembersByExpireDate" parameterType="String" resultMap="MemberResultMap">
 		select * from H_member
-		where expireDate &lt;= #{date}
+		where expireDate &lt;= #{date} and status=1
 	</select>
 	
 	<update id="updateStatus" parameterType="String">

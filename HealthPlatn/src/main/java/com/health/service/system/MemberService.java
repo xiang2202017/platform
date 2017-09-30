@@ -143,13 +143,15 @@ public class MemberService {
 	
 	/**
 	 * 查询还有n天过期的会员
+	 * @param type : 1还没有进行解约或续约申请    2：已经进行申请
 	 * @throws Exception 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Member> getMembersInNDays(String now,String expire) throws Exception {
+	public List<Member> getMembersInNDays(String now,String expire, int type) throws Exception {
 		JSONObject param = new JSONObject();
 		param.put("now", now);
 		param.put("expire", expire);
+		param.put("type", type);
 		return (List<Member>)dao.findForList("MemberMapper.getMembersInNDays", param);
 	}
 
